@@ -2,6 +2,8 @@ FROM node:20-alpine AS builder
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
+RUN npm install -g pnpm
+
 COPY . .
 
 RUN enable pnpm && pnpm i --frozen-lockfile;
