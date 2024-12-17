@@ -6,7 +6,7 @@ export default function Home() {
       <div>
         <p className="cus1">Brilliance</p>
       </div>
-      <div>下方css在压缩之后会失效</div>
+      <div>下方css在压缩之后会失效，修改了去除压缩</div>
       <div className="cus2-container mt-4">
         <p className="cus2-original">
           Picasso had a saying. He said, “Good artists copy. Great artists
