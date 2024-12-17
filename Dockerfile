@@ -1,14 +1,12 @@
 FROM node:20-alpine AS builder
-
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
-
-COPY package*.json ./
-
-RUN enable pnpm && pnpm i --frozen-lockfile;
 
 COPY . .
 
-RUN npm run build
+RUN enable pnpm && pnpm i --frozen-lockfile;
+
+RUN pnpm run build
 
 # Production Stage 
 
