@@ -1,0 +1,91 @@
+name: brilliance-sunling729-top-heweishi
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: "main"
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: |
+            network=host
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          # username:${ { github.actor }}
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GH_PAT }}
+      - name: Login to Aliyun Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: registry.cn-guangzhou.aliyuncs.com
+          username: ${{ secrets.ALIYUN_USERNAME }}
+          password: ${{ secrets.ALIYUN_PASSWORD }}
+      - name: Set DOCKER_REPO_TAGGED based on branch or tag
+        run: |
+          REPO_OWNER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
+          if [[ "${GITHUB_REF}" =~ ^refs/tags/v ]]; then
+            GHCR_TAGGED="ghcr.io/${REPO_OWNER}/brilliance-sunling729-top:${GITHUB_REF##*/}"
+            ALIYUN_TAGGED="registry.cn-guangzhou.aliyuncs.com/hubheweishi/brilliance-sunling729-top:${GITHUB_REF##*/}"
+          else
+            GHCR_TAGGED="ghcr.io/${REPO_OWNER}/brilliance-sunling729-top:latest"
+            ALIYUN_TAGGED="registry.cn-guangzhou.aliyuncs.com/hubheweishi/brilliance-sunling729-top:latest"
+          fi
+          echo "GHCR_TAGGED=$GHCR_TAGGED" >> $GITHUB_ENV
+          echo "ALIYUN_TAGGED=$ALIYUN_TAGGED" >> $GITHUB_ENV
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ env.GHCR_TAGGED }}
+            ${{ env.ALIYUN_TAGGED }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository_owner }}/brilliance-sunling729-top
+            org.opencontainers.image.description=brilliance-sunling729-top image
+
+  deploy-to-server:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: 部署docker到服务器
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST_ALI_8 }}
+          username: ${{ secrets.SSH_USERNAME_ALI_8 }}
+          key: ${{ secrets.SSH_KEY_ALI_8 }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /opt/1panel/apps/openresty/openresty/www/brilliance-sunling729-top-compose
+            docker-compose down brilliance-sunling729-top
+            docker rmi ghcr.io/worshipmoon/brilliance-sunling729-top:latest
+            docker-compose up -d --build brilliance-sunling729-top

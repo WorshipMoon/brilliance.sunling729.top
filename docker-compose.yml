@@ -1,0 +1,11 @@
+# docker-compose.yml
+version: '3'
+services:
+  brilliance-sunling729-top:
+    # image: ghcr.io/worshipmoon/brilliance-sunling729-top:latest
+    image: registry.cn-guangzhou.aliyuncs.com/hubheweishi/brilliance-sunling729-top:latest
+    container_name: brilliance-sunling729-top
+    ports:
+      - '3001:3000'
+    command: sh -c "node server.js"
+    restart: unless-stopped
