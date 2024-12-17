@@ -1,0 +1,73 @@
+body {
+  color: #0a0a0a;
+  background: #ededed;
+}
+p.cus1 {
+  color: green;
+  font-family: "Courier";
+  font-size: 1.6rem;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 10rem;
+  animation: type 4s steps(60, end);
+}
+
+@keyframes type {
+  from {
+    width: 0;
+  }
+}
+
+.cus2-container {
+  position: relative;
+}
+.cus2 {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.cus2 .text {
+  --p: 5%;
+  background: linear-gradient(
+    to right,
+    #0000 var(--p),
+    #ededed calc(var(--p) + 100px)
+  );
+  color: transparent;
+  animation: typewriter 10s linear forwards;
+}
+@property --p {
+  syntax: "<percentage>";
+  initial-value: 0%;
+  inherits: false;
+}
+
+@keyframes typewriter {
+  to {
+    --p: 100%;
+  }
+}
+
+.type {
+  --n: 500;
+  color: #0000;
+  background: linear-gradient(-90deg, #04e079e0 5px, #0000 0) 10px 0,
+    linear-gradient(#000 0 0) 0 0;
+  background-size: calc(var(--n) * 2ch) 200%;
+  -webkit-background-clip: padding-box, text;
+  background-clip: padding-box, text;
+  background-repeat: no-repeat;
+  animation: b 10s infinite steps(1),
+    t calc(var(--n) * 0.3s) steps(var(--n)) forwards;
+}
+
+@keyframes t {
+  from {
+    background-size: 0 100%;
+  }
+}
+@keyframes b {
+  50% {
+    background-position: 0 -100%, 0 0;
+  }
+}
