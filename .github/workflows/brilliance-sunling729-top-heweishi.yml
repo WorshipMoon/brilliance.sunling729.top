@@ -87,5 +87,5 @@ jobs:
           script: |
             cd /opt/1panel/apps/openresty/openresty/www/brilliance-sunling729-top-compose
             docker-compose down brilliance-sunling729-top
-            docker rmi ghcr.io/worshipmoon/brilliance-sunling729-top:latest
+            docker rmi registry.cn-guangzhou.aliyuncs.com/hubheweishi/brilliance-sunling729-top:latest
             docker-compose up -d --build brilliance-sunling729-top
