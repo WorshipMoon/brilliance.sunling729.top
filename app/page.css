@@ -18,6 +18,16 @@ p.cus1 {
   }
 }
 
+
+/* :root {
+  --p: 5%;
+} */
+@property --p {
+  syntax: "<percentage>";
+  initial-value: 0%;
+  inherits: false;
+}
+
 .cus2-container {
   position: relative;
 }
@@ -34,13 +44,9 @@ p.cus1 {
     #ededed calc(var(--p) + 100px)
   );
   color: transparent;
-  animation: typewriter 10s linear forwards;
+  animation: typewriter 5s linear forwards;
 }
-@property --p {
-  syntax: "<percentage>";
-  initial-value: 0%;
-  inherits: false;
-}
+
 
 @keyframes typewriter {
   to {
