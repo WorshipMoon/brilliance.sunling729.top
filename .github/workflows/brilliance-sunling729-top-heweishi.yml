@@ -89,3 +89,4 @@ jobs:
             docker-compose down brilliance-sunling729-top
             docker rmi registry.cn-guangzhou.aliyuncs.com/hubheweishi/brilliance-sunling729-top:latest
             docker-compose up -d --build brilliance-sunling729-top
+            rm -rf /opt/1panel/apps/openresty/openresty/www/common/proxy/proxy_cache_dir/*
