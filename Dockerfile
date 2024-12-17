@@ -6,7 +6,7 @@ RUN npm install -g pnpm
 
 COPY . .
 
-RUN enable pnpm && pnpm i --frozen-lockfile;
+RUN pnpm i
 
 RUN pnpm run build
 
