@@ -11,6 +11,7 @@ export default function Home() {
       >
         <GitHubLog />
       </a>
+      <div>这个站的构建比较随意，放一些展示的效果，目录在博客页面</div>
       <h2 id="typewriter" className="font-bold text-xl mt-8">
         Typewriter 打字机效果
       </h2>
