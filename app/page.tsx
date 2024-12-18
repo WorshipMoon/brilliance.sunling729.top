@@ -1,8 +1,20 @@
 import "./page.css";
+import { GitHubLog } from "@/components/Logo/Logo";
+import Link from "next/link";
+
 export default function Home() {
   return (
-    <div className="min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <h2 id="typewriter" className="font-bold text-xl">Typewriter 打字机效果</h2>
+    <div className="min-h-screen p-8 sm:p-12 font-[family-name:var(--font-geist-sans)]">
+      <a
+        href="https://github.com/WorshipMoon/brilliance.sunling729.top"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <GitHubLog />
+      </a>
+      <h2 id="typewriter" className="font-bold text-xl mt-8">
+        Typewriter 打字机效果
+      </h2>
       <div>
         <p className="cus1">Brilliance</p>
       </div>
