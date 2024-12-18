@@ -1,6 +1,5 @@
 import "./page.css";
 import { GitHubLog } from "@/components/Logo/Logo";
-import Link from "next/link";
 
 export default function Home() {
   return (
