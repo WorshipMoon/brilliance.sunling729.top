@@ -1,4 +1,22 @@
-.h-nav,
+.h-nav {
+  height: 3.6rem;
+}
 .min-h-nav {
-  height: 4rem;
+  min-height: 3.6rem;
+}
+.top-nav {
+  top: 3.6rem;
+}
+
+.nav-li-a {
+  @apply md:px-4 cursor-pointer mr-4 last:mr-0 md:mr-0 transition-colors duration-200 max-md:w-full;
+}
+
+@media not all and (min-width: 768px) {
+  .vertical-menu {
+    @apply h-screen;
+  }
+  .mobile-menu {
+    @apply absolute top-nav pt-6 left-0 right-0 bottom-0 border-t border-gray-700;
+  }
 }
